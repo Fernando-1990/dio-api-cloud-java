@@ -5,6 +5,7 @@ import me.dio.domain.repository.UserRepository;
 import me.dio.domain.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -28,4 +29,13 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.save(userToCreate);
     }
+
+    @Override
+    public List<User> findAllUsers() {
+        if(userRepository.findAll().isEmpty()) {
+            throw new IllegalArgumentException("No Users found! Try to insert a User");
+        }
+        return userRepository.findAll();
+    }
+
 }
