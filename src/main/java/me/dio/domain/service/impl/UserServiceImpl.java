@@ -33,9 +33,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() {
         if(userRepository.findAll().isEmpty()) {
-            throw new IllegalArgumentException("No Users found! Try to insert a User");
+            throw new NoSuchElementException("No Users found! Try to insert a User");
         }
         return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteByid(Long id) {
+        if (!userRepository.existsById(id)){
+            throw new NoSuchElementException("This User doesn't exist.");
+        }
+        userRepository.deleteById(id);
     }
 
 }

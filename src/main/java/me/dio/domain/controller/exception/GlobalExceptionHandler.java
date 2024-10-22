@@ -18,9 +18,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(businessException.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 
     }
+
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNotFoundException(NoSuchElementException notFoundException ) {
-        return new ResponseEntity<>("Resource ID not found.", HttpStatus.NOT_FOUND);
+        var errorMessage = notFoundException.getMessage();
+        if (notFoundException.getMessage() == null || notFoundException.getMessage().isEmpty()) {
+            errorMessage = "Resource ID not found";
+        }
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<String> handleUnexpectedException(NoSuchElementException unexpectedException ) {
