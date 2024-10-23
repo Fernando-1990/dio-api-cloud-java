@@ -46,4 +46,14 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public void update(Long id, User updatedUser) {
+        User existinUser = userRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        existinUser.setName(updatedUser.getName());
+        existinUser.setAccount(updatedUser.getAccount());
+        existinUser.setCard(updatedUser.getCard());
+        existinUser.setNews(updatedUser.getNews());
+        existinUser.setFeatures(updatedUser.getFeatures());
+        userRepository.save(existinUser);
+    }
 }
